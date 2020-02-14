@@ -20,15 +20,18 @@ const CardTable = () => {
     <>    
       <div className="container">
         <div className="row">
+          <h1 className="text-center">Jogo de Tarot</h1>
+        </div>
+        <div className="row">
           {
-            cardsTarot.map(({image}, index) => {
-              return (
-                <div className="col-md-2 col-sm-4 col-xs-12 mt-2 mb-3" key={index}>
-                  <img src={pathImg + image} alt="Imagens" />
-                </div>
-              )
-            })
-
+            cardsTarot.filter( ({image}) => image !== undefined)
+              .map(({image}, index) => {
+                  return (
+                    <div key={index} className="col-md-2 col-sm-4 col-xs-12 mt-2 mb-3">
+                      <img src={pathImg + image} alt="Imagens" />
+                    </div>
+                  )
+              })
           }
         </div>
       </div>
