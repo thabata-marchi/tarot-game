@@ -22,6 +22,9 @@ const CardTable = () => {
   }, [cardsTarot])
 
   const GameInit = () => {
+
+    // Utilizar o Math.random() para embaralhar aleatoriamente as cartas e utilizar o valor do index para isso. 
+
     setVisible( false );
   }
   
