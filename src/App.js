@@ -1,11 +1,6 @@
 import React from 'react';
 import CardTable from './components/CardTable';
-
-//img
-
-// css
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import 'materialize-css/dist/css/materialize.min.css';
 
 function App() {
   return (
