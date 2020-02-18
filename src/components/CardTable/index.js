@@ -39,16 +39,13 @@ const CardTable = () => {
   return(
     <>    
       <div className="container">   
-
         <h1 className="center-align">Jogo de Tarot</h1>
         <button onClick={GameInit} className="start-game center btn-floating btn-large waves-effect waves-light red">
           <i className="material-icons">play_arrow</i>
         </button>
-
         <div className="row">
           <ShowCard />
         </div>
-
       </div>
     </>
   ) 
