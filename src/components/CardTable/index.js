@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import shuffle from 'shuffle-array';
 import api from '../../services/api';
 
 import './CardTable.css';
+import CardsTarot from '../CardsTarot';
 
 const CardTable = () => {
   const [ cardsTarot, setCardsTarot ] = useState([]);
@@ -19,18 +21,24 @@ const CardTable = () => {
       }
   })
     .catch( error => console.log( error) )
-  }, [cardsTarot])
+  }, [])  
 
   const GameInit = () => {
-
-    // Utilizar o Math.random() para embaralhar aleatoriamente as cartas e utilizar o valor do index para isso. 
-
+    setCardsTarot(shuffle(FilterCards));
     setVisible( false );
   }
-  
+
+  const FilterCards = cardsTarot.filter(({image}) => image !== undefined );
+
+  const ShowCard = () =>
+    FilterCards
+    .map(({image}, index) => 
+      <CardsTarot key={index} visible={visible} pathImg={pathImg} pathImgBack={pathImgBack} image={image} index={index} />
+    )
+
   return(
     <>    
-      <div className="container"> 
+      <div className="container">   
 
         <h1 className="center-align">Jogo de Tarot</h1>
         <button onClick={GameInit} className="start-game center btn-floating btn-large waves-effect waves-light red">
@@ -38,24 +46,7 @@ const CardTable = () => {
         </button>
 
         <div className="row">
-          {
-            cardsTarot.filter( ({image}) => image !== undefined )
-            .map(({image}, index) => {
-              if(visible){
-                return(
-                  <div key={index} className="col l2 m4 s12 cards">
-                    <img src={pathImg + image} alt="Imagens" />
-                  </div>      
-                )                
-              } else {
-                return(
-                  <div key={index} className="col l2 m4 s12 cards">
-                    <img src={pathImgBack} alt="Imagens" />
-                  </div>      
-                )  
-              }
-            })
-          }
+          <ShowCard />
         </div>
 
       </div>
