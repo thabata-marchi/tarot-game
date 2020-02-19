@@ -7,9 +7,11 @@ import CardsTarot from '../CardsTarot';
 
 const CardTable = () => {
   const [ cardsTarot, setCardsTarot ] = useState([]);
+  
   const [ pathImg, setPathImg] = useState("");
   const [ pathImgBack, setPathImgBack] = useState("");  
   const [ visible, setVisible ] = useState(true);
+  const [ cardsTurn, setCardsTurn ] = useState(true);
 
   useEffect(() => {
     api.ConnectApi()
@@ -32,8 +34,8 @@ const CardTable = () => {
 
   const ShowCard = () =>
     FilterCards
-    .map(({image}, index) => 
-      <CardsTarot key={index} visible={visible} pathImg={pathImg} pathImgBack={pathImgBack} image={image} index={index} />
+    .map(({name, image}, index) => 
+      <CardsTarot key={index} cardsTarot={cardsTarot} cardsTurn={cardsTurn} setCardsTurn={setCardsTurn} visible={visible} setVisible pathImg={pathImg} pathImgBack={pathImgBack} name={name} image={image} index={index} />
     )
 
   return(
@@ -43,7 +45,7 @@ const CardTable = () => {
         <button onClick={GameInit} className="start-game center btn-floating btn-large waves-effect waves-light red">
           <i className="material-icons">play_arrow</i>
         </button>
-        <div className="row">
+        <div className="row cards-table">
           <ShowCard />
         </div>
       </div>
