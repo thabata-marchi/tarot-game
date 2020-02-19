@@ -1,17 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import shuffle from 'shuffle-array';
 import api from '../../services/api';
 
 import './CardTable.css';
 import CardsTarot from '../CardsTarot';
+import ButtonGame from '../ButtonGame';
 
 const CardTable = () => {
+  const [ clicked, setClicked ] = useState(false);
   const [ cardsTarot, setCardsTarot ] = useState([]);
-  
   const [ pathImg, setPathImg] = useState("");
   const [ pathImgBack, setPathImgBack] = useState("");  
   const [ visible, setVisible ] = useState(true);
-  const [ cardsTurn, setCardsTurn ] = useState(true);
 
   useEffect(() => {
     api.ConnectApi()
@@ -25,31 +24,35 @@ const CardTable = () => {
     .catch( error => console.log( error) )
   }, [])  
 
-  const GameInit = () => {
-    setCardsTarot(shuffle(FilterCards));
-    setVisible( false );
-  }
-
   const FilterCards = cardsTarot.filter(({image}) => image !== undefined );
-
-  const ShowCard = () =>
-    FilterCards
-    .map(({name, image}, index) => 
-      <CardsTarot key={index} cardsTarot={cardsTarot} cardsTurn={cardsTurn} setCardsTurn={setCardsTurn} visible={visible} setVisible pathImg={pathImg} pathImgBack={pathImgBack} name={name} image={image} index={index} />
-    )
+  const ShowCard = () => 
+    <div className="row cards-table">
+      {FilterCards
+        .map(({name, image}, index) => 
+          <CardsTarot 
+            key={index}
+            cardsTarot={cardsTarot}
+            index={index} 
+            name={name}
+            image={image} 
+            pathImg={pathImg}
+            pathImgBack={pathImgBack}
+            visible={visible} 
+            setVisible={setVisible}
+            clicked={clicked}
+            setClicked={setClicked}
+          />
+        )}
+    </div>
 
   return(
-    <>    
-      <div className="container">   
-        <h1 className="center-align">Jogo de Tarot</h1>
-        <button onClick={GameInit} className="start-game center btn-floating btn-large waves-effect waves-light red">
-          <i className="material-icons">play_arrow</i>
-        </button>
-        <div className="row cards-table">
-          <ShowCard />
-        </div>
-      </div>
-    </>
+    <div className="container">   
+      <ButtonGame 
+        setCardsTarot={setCardsTarot}
+        FilterCards={FilterCards}
+        setVisible={setVisible} />
+      <ShowCard />
+    </div>
   ) 
 }
 
