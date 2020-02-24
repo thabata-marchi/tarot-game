@@ -16,7 +16,7 @@ const CardTable = () => {
     api.ConnectApi()
     .then(response => {
       if( response.status === 200 ){
-        const cards = response.data.cards.filter(({image}) => image !== undefined);
+        const cards = response.data.cards;
         setCardsTarot(cards);
         setPathCard({url: response.data.imagesUrl, cardBack: response.data.imageBackCard});
       }
@@ -24,9 +24,11 @@ const CardTable = () => {
     .catch( error => console.log( error) )
   }, [])  
 
+  const filterCard = cardsTarot.filter(({image}) => image !== undefined);
+
   const ShowCard = () => 
     <div className="row cards-table">
-      {cardsTarot
+      {filterCard
         .map(({name, image}, index) => 
           <CardsTarot 
           key={index}
@@ -47,7 +49,7 @@ const CardTable = () => {
   return(
     <div className="container">   
       <ButtonGame 
-        cardsTarot={cardsTarot}
+        filterCard={filterCard}
         setCardsTarot={setCardsTarot}
         setVisible={setVisible} />
       <ShowCard />

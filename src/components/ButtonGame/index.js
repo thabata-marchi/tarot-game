@@ -3,7 +3,7 @@ import shuffle from 'shuffle-array';
 
 const ButtonGame = props => {
   const GameInit = () => {
-    props.setCardsTarot(shuffle(props.cardsTarot));
+    props.setCardsTarot(shuffle(props.filterCard));
     props.setVisible( false );
   }
   return (
