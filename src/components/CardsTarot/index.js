@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 
 import './CardsTarot.css';
 
-const CardsTarot = ({visible, pathImg, image, name, pathImgBack, clicked, setClicked }) => {
+const CardsTarot = ({image, name, pathCard, visible, clicked, setClicked }) => {
 
-  const pathCards = visible ? pathImg + image : pathImgBack;
+  const pathCards = visible ? pathCard.url + image : pathCard.cardBack;
   const [shuffleCards, setShuffleCards] = useState(pathCards);
 
   const [cardSelect, setCardSelect] = useState('hide');
@@ -12,10 +12,7 @@ const CardsTarot = ({visible, pathImg, image, name, pathImgBack, clicked, setCli
 
   const GameStart = () => {
     setCardSelect("visible");
-    setShuffleCards(pathImg + image);
-    
-    console.log( clicked );        
-    //setClicked(true);
+    setShuffleCards(pathCard.url + image);
   }
 
   return (

@@ -7,49 +7,48 @@ import ButtonGame from '../ButtonGame';
 
 const CardTable = () => {
   const [ clicked, setClicked ] = useState(false);
-  const [ cardsTarot, setCardsTarot ] = useState([]);
-  const [ pathImg, setPathImg] = useState("");
-  const [ pathImgBack, setPathImgBack] = useState("");  
   const [ visible, setVisible ] = useState(true);
+
+  const [ cardsTarot, setCardsTarot ] = useState([]);
+  const [ pathCard, setPathCard ] = useState([]);
 
   useEffect(() => {
     api.ConnectApi()
     .then(response => {
       if( response.status === 200 ){
-        setCardsTarot([...response.data.cards, response.data]);
-        setPathImg(response.data.imagesUrl);
-        setPathImgBack(response.data.imageBackCard);
+        const cards = response.data.cards.filter(({image}) => image !== undefined);
+        setCardsTarot(cards);
+        setPathCard({url: response.data.imagesUrl, cardBack: response.data.imageBackCard});
       }
   })
     .catch( error => console.log( error) )
   }, [])  
 
-  const FilterCards = cardsTarot.filter(({image}) => image !== undefined );
   const ShowCard = () => 
     <div className="row cards-table">
-      {FilterCards
+      {cardsTarot
         .map(({name, image}, index) => 
           <CardsTarot 
-            key={index}
-            cardsTarot={cardsTarot}
-            index={index} 
-            name={name}
-            image={image} 
-            pathImg={pathImg}
-            pathImgBack={pathImgBack}
-            visible={visible} 
-            setVisible={setVisible}
-            clicked={clicked}
-            setClicked={setClicked}
-          />
-        )}
+          key={index}
+          index={index} 
+          name={name}
+          image={image}
+          pathCard={pathCard}
+          setPathCard={setPathCard}
+          visible={visible} 
+          setVisible={setVisible}          
+          clicked={clicked}
+          setClicked={setClicked}
+        />
+      )}
     </div>
+
 
   return(
     <div className="container">   
       <ButtonGame 
+        cardsTarot={cardsTarot}
         setCardsTarot={setCardsTarot}
-        FilterCards={FilterCards}
         setVisible={setVisible} />
       <ShowCard />
     </div>
