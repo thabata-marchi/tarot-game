@@ -1,11 +1,7 @@
 import React from 'react';
-import shuffle from 'shuffle-array';
 
-const ButtonGame = props => {
-  const GameInit = () => {
-    props.setCardsTarot(shuffle(props.filterCard));
-    props.setVisible( false );
-  }
+const ButtonGame = ({GameInit}) => {
+
   return (
     <>
       <h1 className="center-align">Jogo de Tarot</h1>
