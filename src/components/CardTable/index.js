@@ -25,7 +25,7 @@ const CardTable = () => {
 
   const CardTurn = (id) => {
     let index = cardsTarot.findIndex( card => card.id === id );
-    const newCardsTarot = [ ... cardsTarot ];
+    const newCardsTarot = [...cardsTarot];
           newCardsTarot[index].flipped = !newCardsTarot[index].flipped;    
     setCardsTarot(newCardsTarot);
   }
